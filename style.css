@@ -1,0 +1,598 @@
+:root {
+  --red: #e53935;
+  --green: #2e7d32;
+  --gold: #ffca28;
+  --dark: #081018;
+  --light: #f5f7fb;
+  --accent: #00897b;
+  --card-bg: rgba(255, 255, 255, 0.96);
+  --shadow-soft: 0 14px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Reset basics */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #16324f 0%, #050914 60%, #020309 100%);
+  color: #ffffff;
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Subtle snow overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(2px 2px at 20px 20px, rgba(255,255,255,0.4) 50%, transparent 60%),
+    radial-gradient(2px 2px at 60px 80px, rgba(255,255,255,0.25) 50%, transparent 60%),
+    radial-gradient(3px 3px at 120px 40px, rgba(255,255,255,0.35) 50%, transparent 60%);
+  background-size: 200px 200px;
+  animation: snow 14s linear infinite;
+  z-index: 0;
+}
+
+@keyframes snow {
+  from { transform: translateY(-40px); }
+  to   { transform: translateY(40px); }
+}
+
+.page-wrap {
+  position: relative;
+  z-index: 1;
+}
+
+/* Layout helpers */
+.container {
+  width: min(1200px, 100% - 2.5rem);
+  margin: 0 auto;
+}
+
+/* Header & Nav */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: linear-gradient(to right, rgba(5, 12, 24, 0.98), rgba(11, 32, 48, 0.98));
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 30% 20%, #ffeb3b, #f44336);
+  box-shadow: 0 0 12px rgba(255, 235, 59, 0.75);
+  font-size: 1.4rem;
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-text span:first-child {
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+}
+
+.brand-text span:last-child {
+  font-size: 0.78rem;
+  opacity: 0.8;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+nav a {
+  color: #f5f5f5;
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 0.1rem;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(to right, var(--gold), var(--red));
+  transition: width 0.22s ease-out;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.btn-small {
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--gold), var(--red));
+  color: #111;
+  font-weight: 600;
+  font-size: 0.85rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.btn-small:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 11px 30px rgba(0, 0, 0, 0.48);
+}
+
+/* Christmas Lights */
+.lights-wrap {
+  width: 100%;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: linear-gradient(to bottom, rgba(0,0,0,0.32), transparent);
+}
+
+.lights {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  padding: 0.7rem 0 0.9rem;
+  position: relative;
+}
+
+.lights::before {
+  content: "";
+  position: absolute;
+  top: 0.1rem;
+  left: 10%;
+  right: 10%;
+  height: 2px;
+  background: radial-gradient(circle, rgba(255,255,255,0.7), transparent 70%);
+  opacity: 0.6;
+}
+
+.bulb {
+  width: 16px;
+  height: 24px;
+  border-radius: 50% 50% 40% 40%;
+  position: relative;
+  box-shadow: 0 0 14px rgba(255,255,255,0.5);
+  animation: blink 1.4s infinite alternate;
+}
+
+.bulb::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 4px;
+  width: 8px;
+  height: 6px;
+  border-radius: 3px;
+  background: #555;
+}
+
+.bulb.red {
+  background: #ff5252;
+  animation-delay: 0s;
+}
+
+.bulb.green {
+  background: #69f0ae;
+  animation-delay: 0.25s;
+}
+
+.bulb.gold {
+  background: #ffeb3b;
+  animation-delay: 0.5s;
+}
+
+.bulb.blue {
+  background: #40c4ff;
+  animation-delay: 0.75s;
+}
+
+@keyframes blink {
+  0% { opacity: 0.6; transform: translateY(0); }
+  100% { opacity: 1; transform: translateY(3px); }
+}
+
+/* Hero section */
+.hero {
+  padding: 3.5rem 0 3rem;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 3vw, 2.7rem);
+  margin-bottom: 0.6rem;
+}
+
+.hero-sub {
+  max-width: 32rem;
+  font-size: 0.98rem;
+  opacity: 0.9;
+}
+
+.hero-actions {
+  margin: 1.4rem 0 0.9rem;
+}
+
+.btn-primary {
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--green), var(--gold));
+  color: #04110d;
+  box-shadow: var(--shadow-soft);
+  font-size: 0.98rem;
+  transition: transform 0.14s ease, box-shadow 0.14s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+.hero-note {
+  font-size: 0.84rem;
+  opacity: 0.9;
+  margin-top: 0.4rem;
+}
+
+.hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.78rem;
+  margin-top: 0.5rem;
+  opacity: 0.9;
+}
+
+.badge {
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.32);
+}
+
+.divider {
+  opacity: 0.6;
+}
+
+/* Hero right card */
+.hero-card {
+  background: radial-gradient(circle at top, rgba(255,255,255,0.12), rgba(3,10,20,0.96));
+  border-radius: 18px;
+  padding: 1.7rem 1.6rem;
+  box-shadow: var(--shadow-soft);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+.hero-card-title {
+  font-size: 0.86rem;
+  text-transform: uppercase;
+  letter-spacing: 0.19em;
+  opacity: 0.8;
+  margin-bottom: 0.4rem;
+}
+
+.countdown {
+  font-weight: 700;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.hero-list {
+  list-style: none;
+  font-size: 0.9rem;
+  margin-bottom: 1.1rem;
+}
+
+.hero-list li + li {
+  margin-top: 0.3rem;
+}
+
+.btn-outline {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.65);
+  background: transparent;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.16s ease;
+}
+
+.btn-outline:hover {
+  background: #ffffff;
+  color: #041016;
+  transform: translateY(-1px);
+}
+
+/* Generic sections */
+.section {
+  padding: 3rem 0;
+}
+
+.section.alt {
+  background: radial-gradient(circle at top, #041421, #02060d);
+}
+
+.section-header {
+  max-width: 620px;
+  margin-bottom: 2rem;
+}
+
+.section-header h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.section-header p {
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+/* Deals grid */
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.deal-card {
+  background: var(--card-bg);
+  color: #111827;
+  border-radius: 18px;
+  padding: 1.5rem 1.4rem 1.4rem;
+  box-shadow: var(--shadow-soft);
+  position: relative;
+  overflow: hidden;
+}
+
+.deal-ribbon {
+  position: absolute;
+  top: 0.9rem;
+  right: -1.6rem;
+  padding: 0.2rem 1.7rem;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: linear-gradient(135deg, var(--red), #ff7043);
+  color: #fff;
+  transform: rotate(17deg);
+}
+
+.deal-ribbon.green {
+  background: linear-gradient(135deg, var(--green), #66bb6a);
+}
+
+.deal-ribbon.gold {
+  background: linear-gradient(135deg, var(--gold), #ffb300);
+}
+
+.deal-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.deal-tagline {
+  font-size: 0.9rem;
+  color: #4b5563;
+  margin-bottom: 0.6rem;
+}
+
+.deal-benefits {
+  list-style: none;
+  font-size: 0.88rem;
+  color: #374151;
+  margin-bottom: 0.9rem;
+}
+
+.deal-benefits li + li {
+  margin-top: 0.2rem;
+}
+
+.btn-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, var(--green), var(--gold));
+  color: #041109;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn-link:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.tiny-text {
+  font-size: 0.7rem;
+  color: #6b7280;
+  margin-top: 0.4rem;
+}
+
+.section-footer-cta {
+  margin-top: 1.8rem;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Steps / How it works */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.step {
+  background: rgba(5, 19, 35, 0.9);
+  border-radius: 16px;
+  padding: 1.3rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+.step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--gold), var(--red));
+  color: #111;
+  margin-bottom: 0.6rem;
+}
+
+.step h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.step p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* FAQ */
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.faq-item {
+  background: rgba(5, 13, 26, 0.92);
+  border-radius: 14px;
+  padding: 1.2rem 1.2rem;
+  border: 1px solid rgba(255,255,255,0.06);
+}
+
+.faq-item h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.faq-item p {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* Footer */
+footer {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  background: #050a13;
+  padding: 1.6rem 0 1.8rem;
+}
+
+.footer-content {
+  font-size: 0.8rem;
+  opacity: 0.88;
+}
+
+.footer-main {
+  margin-bottom: 0.3rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero-card {
+    margin-top: 1.4rem;
+  }
+
+  .deals-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .steps-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-bar {
+    flex-direction: column;
+    gap: 0.7rem;
+    align-items: flex-start;
+  }
+
+  nav ul {
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    font-size: 0.82rem;
+  }
+
+  .deals-grid,
+  .steps-grid,
+  .faq-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .hero {
+    padding-top: 2.4rem;
+  }
+}
